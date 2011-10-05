@@ -21,7 +21,6 @@ import flickrapi
 
 
 api_key = '1324954697192605e8b72e4d8511ab6a'
-api_secret = 'PUT YOUR SECRET KEY HERE'
 
 
 class FlickrPhoto(object):
@@ -91,15 +90,17 @@ class FlickrHelper(object):
             page += 1
 
 
-def getFlickrToken(api_key, api_secret, authenticate=True):
+def getFlickrToken(api_key, authenticate=False):
     '''Returns the flickrapi token'''
 
-    flickrToken = flickrapi.FlickrAPI(api_key, api_secret)
     if authenticate:
+        flickrToken = flickrapi.FlickrAPI(api_key, 'YOUR SECRET KEY HERE')
         token, frob = flickrToken.get_token_part_one(perms='read')
         if not token:
             raw_input('Press ENTER after you authorized this program')
         flickrToken.get_token_part_two((token, frob))
+    else:
+        flickrToken = flickrapi.FlickrAPI(api_key)
     return flickrToken
 
 
@@ -110,7 +111,7 @@ if __name__ == '__main__':
         print 'usage: python main.py <username>'
         sys.exit(1)
 
-    flickrToken = getFlickrToken(api_key, api_secret)
+    flickrToken = getFlickrToken(api_key)
 
     fh = FlickrHelper(flickrToken)
     for i, fp in enumerate(fh.iterPhotos(username)):
