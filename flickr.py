@@ -90,11 +90,13 @@ class FlickrHelper(object):
             page += 1
 
 
-def getFlickrToken(api_key, authenticate=False):
+#def getFlickrToken(api_key, authenticate=False):
+def getFlickrToken(api_key, authenticate=True):
     '''Returns the flickrapi token'''
 
     if authenticate:
-        flickrToken = flickrapi.FlickrAPI(api_key, 'YOUR SECRET KEY HERE')
+        #flickrToken = flickrapi.FlickrAPI(api_key, 'YOUR SECRET KEY HERE')
+        flickrToken = flickrapi.FlickrAPI(api_key, 'a72ec5f4f9941511')
         token, frob = flickrToken.get_token_part_one(perms='read')
         if not token:
             raw_input('Press ENTER after you authorized this program')
@@ -104,15 +106,18 @@ def getFlickrToken(api_key, authenticate=False):
     return flickrToken
 
 
+def flickrIterator(api_key, username):
+    flickrToken = getFlickrToken(api_key)
+    fh = FlickrHelper(flickrToken)
+    return fh.iterPhotos(username)
+
+
 if __name__ == '__main__':
     try:
         username = sys.argv[1]
     except IndexError:
-        print 'usage: python main.py <username>'
+        print 'usage: python flickr.py <username>'
         sys.exit(1)
 
-    flickrToken = getFlickrToken(api_key)
-
-    fh = FlickrHelper(flickrToken)
-    for i, fp in enumerate(fh.iterPhotos(username)):
-        print i, fp.save()
+    for i, fp in enumerate(flickrIterator(api_key, username)):
+        print i#, fp.save()
