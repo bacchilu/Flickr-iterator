@@ -20,7 +20,7 @@ if __name__ == '__main__':
     try:
         username = sys.argv[1]
     except IndexError:
-        print 'usage: python flickr.py <username>'
+        print 'usage: python main.py <username>'
         sys.exit(1)
 
     import flickrgenerator
