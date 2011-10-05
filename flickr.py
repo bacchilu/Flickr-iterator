@@ -71,7 +71,7 @@ class FlickrHelper(object):
         user_id = userInfo.find('user').attrib['nsid']
         return user_id
 
-    def iterPhotos(self, username):
+    def photosGenerator(self, username):
         user_id = self._getUserId(username)
         page = 1
         while True:
@@ -106,10 +106,10 @@ def getFlickrToken(api_key, authenticate=True):
     return flickrToken
 
 
-def flickrIterator(api_key, username):
+def flickrGenerator(api_key, username):
     flickrToken = getFlickrToken(api_key)
     fh = FlickrHelper(flickrToken)
-    return fh.iterPhotos(username)
+    return fh.photosGenerator(username)
 
 
 if __name__ == '__main__':
@@ -119,5 +119,5 @@ if __name__ == '__main__':
         print 'usage: python flickr.py <username>'
         sys.exit(1)
 
-    for i, fp in enumerate(flickrIterator(api_key, username)):
+    for i, fp in enumerate(flickrGenerator(api_key, username)):
         print i#, fp.save()
