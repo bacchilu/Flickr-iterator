@@ -25,4 +25,4 @@ if __name__ == '__main__':
 
     import flickrgenerator
     for i, fp in enumerate(flickrgenerator.flickrGenerator(username)):
-        print i#, fp.save()
+        print i, fp.save()
