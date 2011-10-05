@@ -92,7 +92,7 @@ class FlickrHelper(object):
             page += 1
 
 
-def getFlickrToken(api_key, authenticate=True):
+def getFlickrToken(api_key, api_secret, authenticate=True):
     '''Returns the flickrapi token'''
 
     flickrToken = flickrapi.FlickrAPI(api_key, api_secret)
@@ -105,6 +105,6 @@ def getFlickrToken(api_key, authenticate=True):
 
 
 def flickrGenerator(username):
-    flickrToken = getFlickrToken(api_key)
+    flickrToken = getFlickrToken(api_key, api_secret)
     fh = FlickrHelper(flickrToken)
     return fh.photosGenerator(username)
