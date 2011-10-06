@@ -15,6 +15,8 @@ The script should run the authentication process (a flickr page will be opened i
 
 import sys
 
+import flickrgenerator
+
 
 if __name__ == '__main__':
     try:
@@ -22,7 +24,5 @@ if __name__ == '__main__':
     except IndexError:
         print 'usage: python main.py <username>'
         sys.exit(1)
-
-    import flickrgenerator
     for i, fp in enumerate(flickrgenerator.flickrGenerator(username)):
         print i, fp.save()
